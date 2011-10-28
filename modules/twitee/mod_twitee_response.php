@@ -1,17 +1,17 @@
 <?php
 /**
- * 
+ *
  * Twit-ee Response Class for Twit-ee
  *
  * Pushes the Twitter response to an object
- * 
- * This class is derived from {@link http://code.google.com/p/arc90-service-twitter/ Arc90_Service_Twitter} 
+ *
+ * This class is derived from {@link http://code.google.com/p/arc90-service-twitter/ Arc90_Service_Twitter}
  *
  * @version    1.4
  * @author     George Ornbo <george@shapeshed.com>
  * @license    {@link http://opensource.org/licenses/bsd-license.php BSD License}
  */
- 
+
 /**
  * Twit-ee module
  *

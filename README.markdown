@@ -11,11 +11,11 @@
 
 ## License ##
 
-Twit-ee is free for personal and commercial use. 
+Twit-ee is free for personal and commercial use.
 
-If you use it commercially use a donation of $10 is suggested. You can send [donations here](http://pledgie.org/campaigns/2898). 
+If you use it commercially use a donation of $10 is suggested. You can send [donations here](http://pledgie.org/campaigns/2898).
 
-Twit-ee is licensed under a [Open Source Initiative - BSD License][] license. I encourage others to fork the code and enhance it. 
+Twit-ee is licensed under a [Open Source Initiative - BSD License][] license. I encourage others to fork the code and enhance it.
 
 ## Installation
 
@@ -23,7 +23,7 @@ Twit-ee is licensed under a [Open Source Initiative - BSD License][] license. I 
 * Copy the /language/english/lang.twitee.php file to your /system/languages/english folder
 * Open the [Module Manager](http://www.expressionengine.com/index.php?affiliate=shapeshed&page=/docs/cp/modules/index.html)
 * Install the Twit-ee module
-* In the module enter your Twitter username and password 
+* In the module enter your Twitter username and password
 * Ensure that your /system/cache/ folder is writable
 * Twit-ee is MSM compatible so you can have a separate twitter account for each site
 
@@ -50,21 +50,21 @@ Returns the 20 most recent statuses from non-protected users who have set a cust
 
 	{exp:twitee:public_timeline}
 	{/exp:twitee:public_timeline}
-	
+
 #### Home Timeline ####
 
 Returns the 20 most recent statuses, including retweets, posted by the authenticating user and that user's friends. This is the equivalent of /timeline/home on the Web.
 
 	{exp:twitee:home_timeline}
 	{/exp:twitee:home_timeline}
-	
+
 #### Friends Timeline ####
 
 Returns the 20 most recent statuses posted by the authenticating user and that user's friends. This is the equivalent of /home on the Web.
-	
+
 	{exp:twitee:friends_timeline}
 	{/exp:twitee:friends_timeline}
-	
+
 #### User Timeline ####
 
 Returns the 20 most recent statuses posted from the authenticating user. It's also possible to request another user's timeline via the id parameter below. This is the equivalent of the Web /archive page for your own user, or the profile page for a third party.
@@ -75,24 +75,24 @@ Returns the 20 most recent statuses posted from the authenticating user. It's al
 #### Mentions ####
 
 Returns the 20 most recent mentions (status containing @username) for the authenticating user.
-	
+
 	{exp:twitee:mentions}
 	{/exp:twitee:mentions}
-	
+
 #### Retweeted by me ####
 
 Returns the 20 most recent retweets posted by the authenticating user.
 
 	{exp:twitee:retweeted_by_me}
 	{/exp:twitee:retweeted_by_me}
-	
+
 #### Retweeted to me ####
 
 Returns the 20 most recent retweets posted by the authenticating user's friends.
 
 	{exp:twitee:retweeted_to_me}
 	{/exp:twitee:retweeted_to_me}
-	
+
 #### Retweets of me ####
 
 Returns the 20 most recent retweets posted by the authenticating user's friends.
@@ -103,10 +103,10 @@ Returns the 20 most recent retweets posted by the authenticating user's friends.
 #### Favorites ####
 
 Returns the 20 most recent tweets of the authenticated user that have been retweeted by others.
-	
+
 	{exp:twitee:favorites}
 	{/exp:twitee:favorites}
-	
+
 ### Basic User Methods ###
 
 #### Friends ####
@@ -115,63 +115,63 @@ Returns the authenticating user's friends, each with current status inline. They
 
 	{exp:twitee:friends}
 	{/exp:twitee:friends}
-	
+
 #### Followers ####
 
-Returns the authenticating user's followers, each with current status inline.  They are ordered by the order in which they joined Twitter (this is going to be changed). 
+Returns the authenticating user's followers, each with current status inline.  They are ordered by the order in which they joined Twitter (this is going to be changed).
 
 	{exp:twitee:followers}
 	{/exp:twitee:followers}
-	
+
 
 ## Parameters ##
 
 ### Limit ###
 
 	limit="10"
-	
+
 Limits the number of results returned. Default - 10
 
 ### Refresh ###
 
 	refresh="5"
-	
+
 The number of minutes between cache refreshes. Default - 5 minutes.
 
 ### Site ID ###
 
 	site_id="1"
-	
+
 Allows you to show data from another MSM enabled site. Default - the current site id.
 
 ### Convert URLs into links ###
 
 	convert_urls="n"
-	
+
 Convert urls in the tweet into anchors. Default - "y"
 
 ### Convert @usernames into links ###
 
 	convert_usernames="n"
-	
+
 Convert @username in the tweet into anchors that point to the users profile. Default - "y"
 
 ### Convert #hastags into links ###
 
 	convert_hash_tags="n"
-	
+
 Convert #hashtags in the tweet into anchors that point to search.twitter.com. Default - "y"
 
 ### Capitalise the first letter of the relative time ###
 
 	ucfirst_relative_time="y"
-	
+
 Changes the first letter of the relative time to uppercase. Default - "n"
 
 ### Timeout ###
 
 	timeout="1"
-	
+
 The length of time Twit-ee can take establishing a connection to Twitter in seconds. Default - 1 second
 
 ## Single Variables ##
@@ -179,7 +179,7 @@ The length of time Twit-ee can take establishing a connection to Twitter in seco
 ### For Status methods ###
 
 Public Timeline, Friends Timeline, User Timeline, Replies and Favorites
-	
+
 	Status
 		{created_at}
 		{relative_time}
@@ -201,7 +201,7 @@ Public Timeline, Friends Timeline, User Timeline, Replies and Favorites
 			{url}
 			{protected}
 			{followers_count}
-			
+
 	{count}
 	{total_results}
 
@@ -209,7 +209,7 @@ Public Timeline, Friends Timeline, User Timeline, Replies and Favorites
 ### For Basic user methods ###
 
 Friends, Followers
-	
+
 	User
 		{id}
 		{name}
@@ -231,7 +231,7 @@ Friends, Followers
 			{in_reply_to_user_id}
 			{favorited}
 			{in_reply_to_screen_name}
-			
+
 	{count}
 	{total_results}
 
@@ -258,7 +258,7 @@ Show the latest 10 tweets from your favorites with a cache time of 30 minutes
 
 * [Twitter REST API Documentation](http://apiwiki.twitter.com/REST+API+Documentation)
 * [Github][]
-	
+
 ---
 This file is written using the MarkDown syntax. It may or may not have been parsed. If you are having trouble reading it try running the contents through http://daringfireball.net/projects/markdown/dingus.
 

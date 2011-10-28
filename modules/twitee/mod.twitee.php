@@ -1,11 +1,11 @@
 <?php
 /**
- * 
+ *
  * Main Module Class for Twit-ee
  *
  * Fetches data from Twitter for display in ExpressionEngine templates
- * 
- * This class is derived from {@link http://code.google.com/p/arc90-service-twitter/ Arc90_Service_Twitter} 
+ *
+ * This class is derived from {@link http://code.google.com/p/arc90-service-twitter/ Arc90_Service_Twitter}
  *
  * @version    1.4
  * @author     George Ornbo <george@shapeshed.com>
@@ -44,7 +44,7 @@ class Twitee{
   const PATH_RETWEETS_OF_ME	= 	'/statuses/retweets_of_me';
   const PATH_USER_FRIENDS		= 	'/statuses/friends';
   const PATH_USER_FOLLOWERS	= 	'/statuses/followers';
-  const PATH_FAV_FAVORITES	= 	'/favorites';	
+  const PATH_FAV_FAVORITES	= 	'/favorites';
 
   /**
   * Module version
@@ -55,35 +55,35 @@ class Twitee{
   /**
   * Data sent back to calling function
   * @var string
-  */	
+  */
   public $return_data = "";
 
   /**
   * Sets how long data is cached for. Set to a default of 5 mins in __construct
   * @see __construct
   * @var string
-  */	
+  */
   public $refresh = "";
 
   /**
   * Sets the limit on how many results are displayed. Set to a default of 10 in __construct
   * @see __construct
   * @var string
-  */	
+  */
   public $limit = "";
 
   /**
   * Sets the site id
   * @see __construct
   * @var integer
-  */	
+  */
   public $site_id = "";
 
   /**
   * Sets the account id
   * @see __construct
   * @var integer
-  */	
+  */
   public $account_id = "";
 
   /**
@@ -102,7 +102,7 @@ class Twitee{
   * Sets the number of seconds after which the module will timeout
   * @see __construct
   * @var integer
-  */	
+  */
   public $timeout = "";
 
   /**
@@ -160,7 +160,7 @@ class Twitee{
   public function __construct($username =null, $password =null)
   {
     global $DB, $LANG, $OUT, $TMPL, $PREFS;
-	
+
     $LANG->fetch_language_file('twitee');
 
     $this->refresh = ( ! $TMPL->fetch_param('refresh')) ? '300' : $TMPL->fetch_param('refresh') * 60;
@@ -180,7 +180,7 @@ class Twitee{
     {
       $this->setAuth($query->result[0]['username'], str_rot13($query->result[0]['password']));
       $this->account_id = $query->result[0]['account_id'];
-    }	
+    }
     else
     {
       return $OUT->show_user_error('general', array($LANG->line('twitee_no_up')));
@@ -198,7 +198,7 @@ class Twitee{
   {
     $this->_authUsername = $username;
     $this->_authPassword = $password;
-    return $this;		
+    return $this;
   }
 
   /**
@@ -207,9 +207,9 @@ class Twitee{
   * @see _getData
   * @return string Returns parsed data from Twitter API ready for display in templates
   */
-  public function public_timeline() 
+  public function public_timeline()
   {
-    return $this->_getData("public_timeline", self::PATH_STATUS_PUBLIC, false, "status" );		
+    return $this->_getData("public_timeline", self::PATH_STATUS_PUBLIC, false, "status" );
   }
 
   /**
@@ -218,9 +218,9 @@ class Twitee{
   * @see _getData
   * @return string Returns parsed data from Twitter API ready for display in templates
   */
-  public function home_timeline() 
+  public function home_timeline()
   {
-    return $this->_getData($this->account_id."home_timeline", self::PATH_STATUS_HOME, true, "status" );		
+    return $this->_getData($this->account_id."home_timeline", self::PATH_STATUS_HOME, true, "status" );
   }
 
   /**
@@ -229,8 +229,8 @@ class Twitee{
   * @see _getData
   * @return string Returns parsed data from Twitter API ready for display in templates
   */
-  public function friends_timeline() 
-  {   
+  public function friends_timeline()
+  {
     return $this->_getData($this->account_id."_friends_timeline", self::PATH_STATUS_FRIENDS, true, "status" );
   }
 
@@ -240,9 +240,9 @@ class Twitee{
   * @see _getData
   * @return string Returns parsed data from Twitter API ready for display in templates
   */
-  public function user_timeline() 
+  public function user_timeline()
   {
-    return $this->_getData($this->account_id."_user_timeline", self::PATH_STATUS_USER, true, "status" );	
+    return $this->_getData($this->account_id."_user_timeline", self::PATH_STATUS_USER, true, "status" );
   }
 
   /**
@@ -251,7 +251,7 @@ class Twitee{
   * @see _getData
   * @return string Returns parsed data from Twitter API ready for display in templates
   */
-  public function mentions() 
+  public function mentions()
   {
     return $this->_getData($this->account_id."_mentions", self::PATH_MENTIONS, true, "status");
   }
@@ -262,29 +262,29 @@ class Twitee{
   * @see _getData
   * @return string Returns parsed data from Twitter API ready for display in templates
   */
-  public function retweeted_by_me() 
+  public function retweeted_by_me()
   {
     return $this->_getData($this->account_id."_retweeted_by_me", self::PATH_RETWEETED_BY_ME, true, "status");
   }
-  
+
   /**
   * Returns Twitter Retweets to the authenticated user
   *
   * @see _getData
   * @return string Returns parsed data from Twitter API ready for display in templates
   */
-  function retweeted_to_me() 
+  function retweeted_to_me()
   {
     return $this->_getData($this->account_id."_retweeted_to_me", self::PATH_RETWEETED_TO_ME, true, "status");
   }
-  
+
   /**
   * Returns Twitter Retweets of the authenticated user
   *
   * @see _getData
   * @return string Returns parsed data from Twitter API ready for display in templates
   */
-  function retweets_of_me() 
+  function retweets_of_me()
   {
     return $this->_getData($this->account_id."_retweets_of_me", self::PATH_RETWEETS_OF_ME, true, "status");
   }
@@ -295,7 +295,7 @@ class Twitee{
   * @see _getData
   * @return string Returns parsed data from Twitter API ready for display in templates
   */
-  public function friends() 
+  public function friends()
   {
     return $this->_getData($this->account_id."_friends", self::PATH_USER_FRIENDS, true, "basic_user");
   }
@@ -306,7 +306,7 @@ class Twitee{
   * @see _getData
   * @return string Returns parsed data from Twitter API ready for display in templates
   */
-  public function followers() 
+  public function followers()
   {
     return $this->_getData($this->account_id."_followers", self::PATH_USER_FOLLOWERS, true, "basic_user");
   }
@@ -317,7 +317,7 @@ class Twitee{
   * @see getData
   * @return string Returns parsed data from Twitter API ready for display in templates
   */
-  public function favorites() 
+  public function favorites()
   {
     return $this->_getData($this->account_id."_favorites", self::PATH_FAV_FAVORITES, true, "status");
   }
@@ -325,12 +325,12 @@ class Twitee{
   /**
   * The heavy lifting - checks cache via {@link _checkCache()} makes request to API if necessary via {@link _makeRequest()}
   * If an error code is found in the response headers this is handled by {@link _handleError()}
-  * If there is no error the function updates the cache if necessary via {@link _updateCache()} 
+  * If there is no error the function updates the cache if necessary via {@link _updateCache()}
   * and then parses data with the correct xml parser.
   *
   * @param string $filename the name of the cache file
   * @param string $path the Twitter API path for this call
-  * @param bool $auth Whether this API request needs authorisation. If yes = TRUE. 
+  * @param bool $auth Whether this API request needs authorisation. If yes = TRUE.
   * @param string $parser Which parser should be used for the response
   * @see getData
   * @return string Returns parsed data from Twitter API ready for display in templates
@@ -338,12 +338,12 @@ class Twitee{
   protected function _getData($filename, $path, $auth, $parser)
   {
     global $REGX;
-       
+
     if (!$this->_checkCache($filename))
     {
       $cache_file = PATH_CACHE . $this->cache_folder . $filename .'.'. $this->format;
-      $xml = simplexml_load_file($cache_file);				
-    }	
+      $xml = simplexml_load_file($cache_file);
+    }
 
     else
     {
@@ -352,12 +352,12 @@ class Twitee{
       /** ---------------------------------------
       /**  Handle the response
       /** ---------------------------------------*/
-      if($response)	
+      if($response)
       {
         /** ---------------------------------------
         /**  HTTP response ok? Update the cache and prepare for parsing
         /** ---------------------------------------*/
-        if (!in_array($response->_metadata['http_code'], $this->errors)) 
+        if (!in_array($response->_metadata['http_code'], $this->errors))
         {
           $this->_updateCache($response->_data, $filename);
           $xml = new SimpleXMLElement($response->_data);
@@ -377,7 +377,7 @@ class Twitee{
       {
         $cache_file = PATH_CACHE . $this->cache_folder . $filename .'.'. $this->format;
 
-        if (file_exists($cache_file)) 
+        if (file_exists($cache_file))
         {
           $xml = simplexml_load_file($cache_file);
         }
@@ -394,17 +394,17 @@ class Twitee{
     }
     if (!empty($xml))
     {
-      switch($parser) 
+      switch($parser)
       {
         case 'status':
-        return $this->_parse_status($xml);	
+        return $this->_parse_status($xml);
         break;
         case 'basic_user':
-        return $this->_parse_basic_user($xml);	
+        return $this->_parse_basic_user($xml);
         break;
       }
     }
-  }	
+  }
 
   /**
   * Gets data via a cURL request
@@ -421,7 +421,7 @@ class Twitee{
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, self::API_URL . $url .'.'. $format);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-    curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$this->timeout);		
+    curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$this->timeout);
     if($auth)
     {
       curl_setopt($ch, CURLOPT_USERPWD, "{$this->_authUsername}:{$this->_authPassword}");
@@ -433,14 +433,14 @@ class Twitee{
 
     if(!empty($data))
     {
-      return $this->_lastResponse = new Twitee_response($data, $metadata, $format);	
+      return $this->_lastResponse = new Twitee_response($data, $metadata, $format);
     }
     else
     {
       return false;
     }
   }
-  
+
   /**
   * Handles Error Response Codes from Twitter
   *
@@ -449,13 +449,13 @@ class Twitee{
   * @param array $response The response from the Twitter API
   * @return string
   */
-  protected function _handleError($response)	
+  protected function _handleError($response)
   {
     global $LANG;
 
     $LANG->fetch_language_file('twitee');
 
-    switch ($response->_metadata['http_code']) 
+    switch ($response->_metadata['http_code'])
     {
       case 400:
       return $LANG->line('twitee_error_400');
@@ -486,20 +486,20 @@ class Twitee{
   *
   * @param string $filename The filename of the cache file
   * @return bool Returns TRUE if cache is stale
-  */	
+  */
   protected function _checkCache($filename)
   {
 
     $cache_file = PATH_CACHE . $this->cache_folder . $filename .'.'. $this->format;
 
-    if (!file_exists($cache_file)) 
+    if (!file_exists($cache_file))
     {
       return TRUE;
     }
 
     else
     {
-      $last_modified = filemtime($cache_file); 
+      $last_modified = filemtime($cache_file);
 
       if (time() - $this->refresh > $last_modified)
       {
@@ -511,7 +511,7 @@ class Twitee{
       }
     }
   }
-  
+
   /**
   * Updates the cache
   *
@@ -521,10 +521,10 @@ class Twitee{
   * @param string $filename The filename for the cache file
   * @return null
   */
-  protected function _updateCache($data, $filename)	
+  protected function _updateCache($data, $filename)
   {
 
-  $cache_dir  = PATH_CACHE. $this->cache_folder;				
+  $cache_dir  = PATH_CACHE. $this->cache_folder;
   $cache_file = $cache_dir . $filename .'.'. $this->format;
 
   if ( ! @is_dir($cache_dir))
@@ -533,8 +533,8 @@ class Twitee{
     {
       return FALSE;
     }
-  @chmod($cache_dir, 0777);            
-  }	
+  @chmod($cache_dir, 0777);
+  }
 
   if ( ! $fp = @fopen($cache_file, 'wb'))
   {
@@ -554,15 +554,15 @@ class Twitee{
   *
   * @param string $xml the xml to be parsed
   * @return string Returns parsed xml
-  */	
+  */
   protected function _parse_status($xml)
-  {   
+  {
     global $TMPL, $REGX, $FNS, $LOC;
-    
+
     if ( ! class_exists('Typography')){require PATH_CORE.'core.typography'.EXT;}
 
     $TYPE = new Typography(FALSE, FALSE);
-    
+
     $prefs = array(
         'text_format'   => 'none',
         'html_format'   => 'all',
@@ -570,16 +570,16 @@ class Twitee{
         'allow_img_url' => 'n',
         'convert_curly' => 'y'
     );
-    
+
     $count = 0;
-    
+
     /** ---------------------------------------
     /**  Parse date variables outside
     /** ---------------------------------------*/
     $date_vars = array('created_at');
 
     foreach ($date_vars as $val)
-    {					
+    {
       if (preg_match_all("/".LD.$val."\s+format=[\"'](.*?)[\"']".RD."/s", $this->tagdata, $matches))
       {
         for ($j = 0; $j < count($matches['0']); $j++)
@@ -594,7 +594,7 @@ class Twitee{
         }
       }
     }
-    
+
     foreach ($xml->status as $status)
     {
       if($count == $this->limit){break;}
@@ -602,7 +602,7 @@ class Twitee{
       /** ---------------------------------------
       /**  Prepare conditionals
       /** ---------------------------------------*/
-      
+
       $cond = array();
       foreach ($status as $key => $val)
       {
@@ -611,9 +611,9 @@ class Twitee{
 
       $cond['count'] = $count+1;
       $cond['total_results'] = $this->limit;
-      
+
       $tagdata = $FNS->prep_conditionals($this->tagdata, $cond);
-           
+
       $status->text = $this->twitterStatusUrlConverter($status->text);
       $status->text = $TYPE->parse_type($status->text, $prefs);
       $status->text = $REGX->xss_clean($status->text);
@@ -621,7 +621,7 @@ class Twitee{
       /** ---------------------------------------
       /**  Single variables
       /** ---------------------------------------*/
-      
+
       foreach ($TMPL->var_single as $key => $val)
       {
         if (isset($status->$val))
@@ -645,7 +645,7 @@ class Twitee{
             $tagdata = $TMPL->swap_var_single($key, $val, $tagdata);
         }
       }
-      
+
       foreach ($status->user as $user)
       {
         foreach ($TMPL->var_single as $key => $val)
@@ -656,14 +656,14 @@ class Twitee{
           }
         }
       }
-      
+
     $this->return_data .= $tagdata;
     $count++;
     }
-    
-  return $this->return_data;	
+
+  return $this->return_data;
   }
-  
+
   /**
   * Parses XML and returns as ExpressionEngine variables for the Basic User xml schema
   *
@@ -672,13 +672,13 @@ class Twitee{
   */
   protected function _parse_basic_user($xml)
   {
-    
+
     global $TMPL, $REGX, $FNS, $LOC;
-    
+
     if ( ! class_exists('Typography')){require PATH_CORE.'core.typography'.EXT;}
 
     $TYPE = new Typography(FALSE, FALSE);
-    
+
     $prefs = array(
         'text_format'   => 'none',
         'html_format'   => 'all',
@@ -686,16 +686,16 @@ class Twitee{
         'allow_img_url' => 'n',
         'convert_curly' => 'y'
     );
-    
+
     $count = 0;
-    
+
     /** ---------------------------------------
     /**  Parse date variables outside
     /** ---------------------------------------*/
     $date_vars = array('created_at');
 
     foreach ($date_vars as $val)
-    {					
+    {
       if (preg_match_all("/".LD.$val."\s+format=[\"'](.*?)[\"']".RD."/s", $this->tagdata, $matches))
       {
         for ($j = 0; $j < count($matches['0']); $j++)
@@ -710,15 +710,15 @@ class Twitee{
         }
       }
     }
-    
-    foreach ($xml->user as $user)		
+
+    foreach ($xml->user as $user)
     {
       if($count == $this->limit){break;}
-      
+
       /** ---------------------------------------
       /**  Prepare conditionals
       /** ---------------------------------------*/
-      
+
       $cond = array();
       foreach ($user as $key => $val)
       {
@@ -727,14 +727,14 @@ class Twitee{
 
       $cond['count'] = $count+1;
       $cond['total_results'] = $this->limit;
-      
+
       $tagdata = $FNS->prep_conditionals($this->tagdata, $cond);
 
-      
+
       /** ---------------------------------------
       /**  Single variables
       /** ---------------------------------------*/
-      
+
       foreach ($TMPL->var_single as $key => $val)
       {
         if (isset($user->$val))
@@ -758,12 +758,12 @@ class Twitee{
             $tagdata = $TMPL->swap_var_single($key, $val, $tagdata);
         }
       }
-      
+
       foreach ($user->status as $status)
       {
         $status->text = $this->twitterStatusUrlConverter($status->text);
         $status->text = $TYPE->parse_type($status->text, $prefs);
-        $status->text = $REGX->xss_clean($status->text);	
+        $status->text = $REGX->xss_clean($status->text);
 
         foreach ($TMPL->var_single as $key => $val)
         {
@@ -773,12 +773,12 @@ class Twitee{
           }
         }
       }
-      
+
     $this->return_data .= $tagdata;
     $count++;
-    } 
-    return $this->return_data;	
-    
+    }
+    return $this->return_data;
+
   }
 
   /*
@@ -845,14 +845,14 @@ class Twitee{
     {
       $status = preg_replace("/(@([_a-z0-9\-]+))/i","<a href=\"http://twitter.com/$2\" title=\"Follow $2\"$rel>$1</a>",$status);
     }
-    
+
     if($this->convert_hash_tags == "y")
     {
       $status = preg_replace("/(#([_a-z0-9\-]+))/i","<a href=\"http://search.twitter.com/search?q=%23$2\" title=\"Search $1\"$rel>$1</a>",$status);
     }
     return $status;
   }
-  
+
 }
 
 ?>
